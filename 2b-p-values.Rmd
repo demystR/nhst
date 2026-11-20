@@ -2,10 +2,10 @@
 
 <div class="draft">Work in progress.</div>
 
-- recap from Chapter \@ref(null-distributions): null world of average Steves, 1000 groups of 10, t-values, cutoffs leaving the most extreme 5% outside
-- this chapter: put a number on "rare"; share of null t-values beyond a point = probability of landing beyond it
-- define: **p-value** = probability of a result at least as extreme as ours, if the null hypothesis is true
-- then: what a p-value is *not*, shown by simulating p-values in a world with no effect and in a world with one
+- In Chapter \@ref(null-distributions) we took 1000 groups of 10 Steves from a world where Steves are average, worked out a t-value for each, and found cutoffs that leave the most extreme 5% outside
+- Here we put a number on how rare a t-value is: the share of null t-values beyond it
+- That share is the **p-value**: the probability of a result at least as extreme as ours if the null hypothesis is true
+- Then we simulate p-values with and without a real effect, to see what they can and can't tell us
 
 <div class="summary-box">
 null t-values -> share at least as extreme as ours -> p-value
@@ -19,13 +19,13 @@ null t-values -> share at least as extreme as ours -> p-value
 
 ## Files For This Chapter
 
-- download both files, save them in the same folder:
+- Download both files and save them in the same folder:
   - <a href="exercises/2b-p-values-exercises.Rmd" download>2b-p-values-exercises.Rmd</a>
-  - <a href="exercises/my_functions.R" download>my_functions.R</a> (skip if you already have your own)
+  - <a href="exercises/my_functions.R" download>my_functions.R</a> (only if you don't have your own yet)
 
 ## Load Your Toolbox
 
-- the ten scores from Chapter \@ref(standard-error-t), needed later
+- The ten scores from Chapter \@ref(standard-error-t), used later
 
 ```{r score-data}
 scores <- c(44, 47, 48, 49, 50, 50, 51, 52, 53, 56)
@@ -36,7 +36,7 @@ library(tidyverse)
 source("my_functions.R")
 ```
 
-- this chapter leans on `my_t_value()`, `my_null_t()` and `my_cutoffs()`; check them first (three `TRUE`s):
+- We need `my_t_value()`, `my_null_t()` and `my_cutoffs()`. Check them first; you should see three `TRUE`s:
 
 ```{r toolbox-check}
 all.equal(my_t_value(scores, 49), unname(t.test(scores, mu = 49)$statistic))
@@ -52,8 +52,8 @@ all.equal(mine, r_version)
 all.equal(my_cutoffs(20:1, alpha = 0.1), c(2, 19))
 ```
 
-- recreate `null_ts` from Chapter \@ref(null-distributions): 1000 null t-values, groups of 10 Steves
-- `map_dbl(1:1000, \(i) ...)` = run the code 1000 times, keep each number
+- Rebuild `null_ts` from Chapter \@ref(null-distributions): 1000 null t-values from groups of 10 Steves
+- `map_dbl(1:1000, \(i) ...)` runs the code 1000 times and keeps each number
 
 ```{r null-ts}
 set.seed(10)
@@ -64,11 +64,11 @@ cutoffs
 
 ## Alpha And Type I Errors
 
-- all 1000 `null_ts` come from a world where the null is true
-- using `cutoffs` to call results "far": wrong for the 5% past them
-- define: **Type I error** = calling a result "far" when nothing is going on
-- last chapter alpha = share of null values marked rare; now: **alpha** = probability of a Type I error
-- alpha = .05: test makes a Type I error 5% of the time when the null is true
+- All 1000 `null_ts` come from a world where the null is true
+- If we call a result "far" when it's past `cutoffs`, we're wrong for the 5% past them
+- Calling a result "far" when nothing is going on is a **Type I error**
+- In the last chapter alpha was the share of null values we marked as rare. It's also the probability of a Type I error
+- With alpha = .05, the test makes a Type I error 5% of the time when the null is true
 
 ```{r type-i-plot, fig.cap="The 1000 null t-values. The ones past the cutoffs (orange) would be Type I errors.", fig.alt="Histogram of 1000 t-values centred on zero. Bars beyond two dashed cutoff lines near -2.3 and 2.3 are orange; the rest are blue.", echo=FALSE}
 tibble(t = null_ts) |>
@@ -86,7 +86,7 @@ tibble(t = null_ts) |>
 ```{r type-i-plot-code, ref.label="type-i-plot", eval=FALSE, webex.hide="Show the plot code"}
 ```
 
-- count them:
+- Count them:
 
 ```{r type-i-count}
 past <- null_ts < cutoffs[1] | null_ts > cutoffs[2]
@@ -96,8 +96,8 @@ my_mean(past)
 
 ## Watch It Build
 
-- widget = testing view of the same null distribution: groups of 10 Steves, cutoffs drawn, table counting samples past them
-- note: widget uses exact t-distribution cutoffs (met later in chapter), so its lines sit slightly away from `cutoffs`
+- The widget runs the same simulation: groups of 10 Steves, the cutoffs, and a table counting the samples past them
+- It uses the exact cutoffs from the t distribution (later in this chapter), so its lines sit slightly away from `cutoffs`
 
 <iframe class="demyst-widget" src="apps/nhst/embed.html?mode=null&n=10&null=175&sd=7&unit=cm" width="100%" height="760" title="Null distribution of t interactive widget" style="border: 0;"></iframe>
 
@@ -113,25 +113,25 @@ window.addEventListener("message", function (event) {
 });
 </script>
 
-1. **+1** a few times, then **+1000**: share past cutoffs settles near alpha, 5% (= Type I error rate)
-2. **Show t-values as** -> **Dots**: solid dots = samples wrongly called "far"
-3. **Alpha** -> .01, no new samples: cutoffs move out, fewer past them
-4. change sample size, rebuild: very small samples -> fatter tails -> cutoffs further out
+1. Click **+1** a few times, then **+1000**. The share past the cutoffs settles near 5%, the Type I error rate
+2. Set **Show t-values as** to **Dots**. The solid dots are the samples wrongly called "far"
+3. Set **Alpha** to .01 without adding samples. The cutoffs move out and fewer t-values are past them
+4. Change the sample size and rebuild. Very small samples have fatter tails, so the cutoffs sit further out
 
 ## Your Turn: Write `my_sim_p_value()`
 
-- answers "how far is far enough?" from Chapter \@ref(null-distributions)
-- p-value = proportion of null t-values at least as far from zero as ours
+- This answers "how far is far enough?" from Chapter \@ref(null-distributions)
+- The p-value is the proportion of null t-values at least as far from zero as ours
 
 $$
 p = \frac{\text{number of null t-values with } |t_{\text{null}}| \geq |t|}{\text{number of null t-values}}
 $$
 
-- $|t|$ = **absolute value**: distance from zero, sign dropped (`abs()` in R)
-- recipe:
+- $|t|$ is the **absolute value**, the distance from zero with the sign dropped (`abs()` in R)
+- Steps:
   1. for each null t-value: `abs(null_ts) >= abs(t)`
   2. proportion of `TRUE`s
-- proportion of `TRUE`s = mean of TRUE/FALSE (TRUE = 1, FALSE = 0), so `my_mean()` does it
+- The proportion of `TRUE`s is the mean of the TRUE/FALSE values (TRUE counts as 1, FALSE as 0), so `my_mean()` does it
 
 ```{r my-sim-p-value-exercise, eval=FALSE}
 my_sim_p_value <- function(t, null_ts) {
@@ -159,7 +159,7 @@ my_sim_p_value(t = 0.95, null_ts = null_ts)
 ```
 `r unhide()`
 
-- `abs()`: both tails count (-3 as far out as 3); define: **two-sided** p-value
+- `abs()` makes both tails count, so -3 is as far out as 3. This is a **two-sided** p-value
 
 ```{r sim-p-plot, fig.cap="The simulated p-value for t = 0.95: the share of null t-values at least as far from zero (orange).", fig.alt="Histogram of null t-values. Bars below -0.95 and above 0.95 are orange, the middle is blue. Solid lines mark -0.95 and 0.95.", echo=FALSE}
 tibble(t = null_ts) |>
@@ -179,10 +179,10 @@ tibble(t = null_ts) |>
 
 ## Check It: Close Enough
 
-- back to the ten scores from Chapter \@ref(standard-error-t), comparison values 49 and 46
-- Steve null t-values still work: under the null, distribution of t depends only on sample size, not mean or SD
-- simulated p wobbles around the exact one (1000 samples), so `all.equal()` would fail
-- instead check gap small: `abs(...) < 0.05`
+- Back to the ten scores from Chapter \@ref(standard-error-t), against comparison values 49 and 46
+- The Steve null t-values still work here: under the null, the distribution of t depends only on the sample size, not the mean or SD
+- With 1000 samples the simulated p wobbles around the exact one, so `all.equal()` would fail
+- Instead we check the gap is small: `abs(...) < 0.05`
 
 ```{r sim-p-check}
 t_49 <- my_t_value(scores, comparison_value = 49)
@@ -204,12 +204,12 @@ c(
 abs(my_sim_p_value(t_46, null_ts) - t.test(scores, mu = 46)$p.value) < 0.05
 ```
 
-- `TRUE` each time = within 0.05 of exact; p-value worked out from a null distribution built by hand
+- `TRUE` both times, so the p-values from our own null distribution are within 0.05 of R's
 
 ## From Simulation To The t Distribution
 
-- more and more samples -> smoother histogram -> smooth curve = **t distribution**
-- shape depends only on degrees of freedom (df = n - 1 = 9 here)
+- With more and more samples the histogram gets smoother and becomes a curve, the **t distribution**
+- Its shape depends only on the degrees of freedom (df = n - 1 = 9 here)
 
 ```{r t-curve, fig.cap="The simulated null t-values with the exact t distribution for 9 degrees of freedom drawn over them.", fig.alt="Histogram of simulated t-values with a smooth orange t distribution curve following its shape closely.", echo=FALSE}
 curve_data <- tibble(t = seq(-6, 6, 0.05)) |>
@@ -227,9 +227,9 @@ ggplot(tibble(t = null_ts), aes(x = t)) +
 ```{r t-curve-code, ref.label="t-curve", eval=FALSE, webex.hide="Show the plot code"}
 ```
 
-- R knows the curve exactly, so no simulation needed
-- `pt()` = area *below* a value, e.g. `pt(-2, df = 9)` = proportion of t-values below -2
-- treat `pt()` like `sum()`: the one piece too big to build by hand here
+- R knows this curve exactly, so we don't need to simulate
+- `pt()` gives the area below a value. `pt(-2, df = 9)` is the proportion of t-values below -2
+- Treat `pt()` like `sum()`: a built-in we use without building it by hand
 
 ```{r pt-example}
 pt(-2, df = 9)
@@ -242,10 +242,10 @@ $$
 p = 2 \times \underbrace{P(T \leq -|t|)}_{\text{area in one tail: } \texttt{pt(-abs(t), df)}}
 $$
 
-- recipe:
+- Steps:
   1. lower-tail area beyond negative version of our t: `pt(-abs(t), df)`
   2. double it (two-sided; the curve is symmetric)
-- `-abs(t)` always negative, so works for t above or below zero
+- `-abs(t)` is always negative, so this works whether t is above or below zero
 
 ```{r my-p-value-exercise, eval=FALSE}
 my_p_value <- function(t, df) {
@@ -275,7 +275,7 @@ my_p_value(t = 0.95, df = 9)
 
 ## Check It Against `t.test()`
 
-- no simulation now, so expect exact match
+- No simulation this time, so the match should be exact
 
 ```{r my-p-value-check}
 c(mine = my_p_value(t_49, df = 9), R = t.test(scores, mu = 49)$p.value)
@@ -298,19 +298,19 @@ sim_46 <- my_sim_p_value(t_46, null_ts)
 | 49 | `r round(t_49, 2)` | `r round(sim_49, 3)` | `r round(p_49, 3)` | No |
 | 46 | `r round(t_46, 2)` | `r round(sim_46, 3)` | `r round(p_46, 3)` | Yes |
 
-- against 49: t this far out in about `r round(100 * p_49)`% of null samples; not unusual, do not reject
-  - does not show mean is exactly 49, only that data are compatible with it
-- against 46: under 1% of null samples; past cutoff, reject null that mean is 46
-- p below alpha <=> t past the cutoffs: same decision, two ways of saying it
+- Against 49, a t this far out turns up in about `r round(100 * p_49)`% of null samples. Not unusual, so we don't reject the null
+  - This doesn't show the mean is 49, only that the data are compatible with it
+- Against 46, it turns up in under 1% of null samples. It's past the cutoff, so we reject the null that the mean is 46
+- p below alpha and t past the cutoffs are the same decision
 
-## What A p-Value Is Not
+## Misreading p-Values
 
-- p-value is **not** P(null is true); it is P(result this extreme | null true)
-- simulate p-values in two worlds to see what they do and don't tell us
+- A p-value is the probability of a result this extreme if the null is true. It isn't the probability that the null is true
+- Simulating p-values in two worlds shows what they can and can't tell us
 
 ### In A World With No Effect
 
-- 1000 groups of 10 average Steves, one p-value each (reuse `null_ts`)
+- 1000 groups of 10 average Steves, one p-value each (from `null_ts`)
 
 ```{r null-ps}
 null_ps <- my_p_value(null_ts, df = 9)
@@ -330,14 +330,14 @@ tibble(p = null_ps) |>
 ```{r null-ps-plot-code, ref.label="null-ps-plot", eval=FALSE, webex.hide="Show the plot code"}
 ```
 
-- flat: when the null is true, p = .80 and p = .03 are equally likely
-- about 5% below .05 = alpha again
-- so a large p is not evidence *for* the null; with no effect, p is just a random number between 0 and 1
+- The histogram is flat. When the null is true, p = .80 and p = .03 are equally likely
+- About 5% fall below .05, which is alpha again
+- So a large p isn't evidence for the null. With no effect, p is just a random number between 0 and 1
 
 ### In A World With An Effect
 
-- now Steves really are taller: mean 180 cm, SD 7, still compared with 175
-- run the same study 20 times, groups of 10
+- Now Steves really are taller: mean 180 cm, SD 7, still compared with 175
+- Run the same study 20 times with groups of 10
 
 ```{r effect-ps}
 set.seed(4)
@@ -364,13 +364,13 @@ tibble(study = 1:20, p = effect_ps) |>
 ```{r effect-ps-plot-code, ref.label="effect-ps-plot", eval=FALSE, webex.hide="Show the plot code"}
 ```
 
-- same world, same design: p-values from below .001 to almost .5
+- Same world, same design, and p-values from below .001 to almost .5
 - `r sum(effect_ps >= 0.05)` of the 20 studies miss a real 5 cm difference
-- so:
-  - p above .05 does not mean "no effect"
-  - p does not measure how big or how real an effect is
-  - one study's p is a noisy draw; how often it falls below .05 depends on the effect and sample size = **power** (Chapter \@ref(power))
-- assumption note: exact p from `t.test()` assumes independent observations from a normal population; simulation assumed the same via `rnorm()`
+- What this means:
+  - p above .05 doesn't mean there's no effect
+  - p doesn't tell you how big an effect is
+  - one study's p is a noisy draw. How often it falls below .05 depends on the effect and the sample size, which is **power** (Chapter \@ref(power))
+- The exact p from `t.test()` assumes independent observations from a normal population. Our simulation assumed the same, through `rnorm()`
 
 Which statement describes a p-value of .004? `r mcq(c("There is a 0.4% chance that the null hypothesis is true", answer = "If the null hypothesis were true, a t-value at least this extreme would turn up in about 0.4% of samples", "There is a 99.6% chance that there is a real difference"))`
 
@@ -378,8 +378,8 @@ A study finds p = .40. What can you conclude? `r mcq(c("There is no effect", "Th
 
 ## Try It On Real Data
 
-- `sleep` data: extra hours of sleep on the first drug, 10 patients; compare with 0 (no extra sleep)
-- 10 patients, so reuse `null_ts`
+- The `sleep` data: extra hours of sleep on the first drug for 10 patients, compared with 0 (no extra sleep)
+- 10 patients, so `null_ts` works here
 
 ```{r real-data-p}
 drug_1 <- sleep |> filter(group == 1) |> pull(extra)
@@ -395,9 +395,9 @@ abs(my_sim_p_value(drug_t, null_ts) - t.test(drug_1, mu = 0)$p.value) < 0.05
 all.equal(my_p_value(drug_t, df = 9), t.test(drug_1, mu = 0)$p.value)
 ```
 
-- `null_ts` came from heights (mean 175, SD 7), not sleep; fine because null t depends only on sample size
-- p about `r round(my_p_value(drug_t, df = 9), 2)`: not past cutoff at .05, do not reject "no added sleep"
-- after the last section: does not show no effect; 10 patients, a modest effect is easily missed
+- `null_ts` came from heights (mean 175, SD 7), not sleep. That's fine because the null distribution of t depends only on the sample size
+- p is about `r round(my_p_value(drug_t, df = 9), 2)`, not below .05, so we don't reject "no extra sleep"
+- That doesn't show the drug does nothing. With 10 patients a modest effect is easy to miss
 
 ## Add To Your Toolbox
 
@@ -426,7 +426,7 @@ my_p_value <- function(t, df) {
 ```
 `r unhide()`
 
-- then check the saved file works on its own (last chunk of the exercise file):
+- Then check the saved file works on its own (the last chunk of the exercise file):
 
 ```{r toolbox-saved-check, eval=FALSE}
 rm(list = ls())
@@ -441,7 +441,7 @@ all.equal(
 )
 ```
 
-- expect two `TRUE`s
+- You should see two `TRUE`s
 
 ## Where This Goes Next
 
@@ -449,5 +449,5 @@ all.equal(
 null t-values -> cutoffs -> p-value
 </div>
 
-- p below alpha in a null world = Type I error
-- next chapter: both kinds of mistake side by side, Type I and Type II, in one 2 x 2 table
+- p below alpha in a world with no effect is a Type I error
+- Next chapter: both kinds of mistake, Type I and Type II, in one 2 x 2 table

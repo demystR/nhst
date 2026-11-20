@@ -35,7 +35,7 @@ all.equal(mine, r_version)
 all.equal(my_cutoffs(20:1, alpha = 0.1), c(2, 19))
 ```
 
-- looking for three `TRUE`s
+- You should see three `TRUE`s
 
 ## Recreate the null distribution
 
@@ -48,7 +48,7 @@ cutoffs
 
 ## Alpha and Type I errors
 
-- how many null t-values are past the cutoffs? what share?
+- How many null t-values are past the cutoffs, and what share is that?
 
 ```{r type-i-count}
 past <- 
@@ -111,7 +111,7 @@ all.equal(my_p_value(t_49, df = 9), t.test(scores, mu = 49)$p.value)
 all.equal(my_p_value(t_46, df = 9), t.test(scores, mu = 46)$p.value)
 ```
 
-## What a p-value is not
+## Misreading p-values
 
 ### In a world with no effect
 
@@ -135,8 +135,8 @@ round(sort(effect_ps), 3)
 my_mean(effect_ps < 0.05)
 ```
 
-- try it: change `1:20` to `1:1000`. What share is below .05 now?
-- try it: change `n = 10` to `n = 30` (and `df = 9` to `df = 29`). What happens?
+- Change `1:20` to `1:1000`. What share is below .05 now?
+- Change `n = 10` to `n = 30` (and `df = 9` to `df = 29`). What happens to the share below .05?
 
 ## Try it on real data
 
@@ -160,7 +160,7 @@ all.equal(my_p_value(drug_t, df = 9), t.test(drug_1, mu = 0)$p.value)
 2. Copy your finished `my_sim_p_value()` and `my_p_value()` into it, under the **p-values** heading. Copy only the functions.
 3. Save `my_functions.R`.
 
-- check the saved toolbox works on its own; looking for two `TRUE`s
+- Check the saved toolbox works on its own. You should see two `TRUE`s
 
 ```{r toolbox-check}
 rm(list = ls())
