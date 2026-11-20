@@ -1,0 +1,13 @@
+# Power {#power}
+
+<div class="draft">Work in progress.</div>
+
+<div class="note">
+**Not written yet.** Working outline below.
+</div>
+
+- a world with an effect: Cohen's d
+- count effect t-values past the null cutoffs
+- power changes with n, d and alpha
+- the stats book introduces this with the Steves (link)
+- build my_power_at(n, effect), used by the next three chapters

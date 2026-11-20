@@ -1,0 +1,46 @@
+# (PART) Power in Practice {-}
+
+# A Priori Power {#a-priori-power}
+
+<div class="draft">Work in progress.</div>
+
+<div class="note">
+**Not written yet.** Working outline below.
+</div>
+
+Question: how many people do I need?
+
+Running example: does a short mindfulness exercise before an exam reduce test anxiety? Two groups.
+
+- truth: d = 0.4
+- simulate 1000 labs at each sample size
+
+Reality 1: the study that usually fails
+
+- 20 per group, power about .23
+- about 3 in 4 labs find nothing, though the effect is real
+- figure: 1000 lab results as dots, significant or not
+
+Reality 2: the lucky ones exaggerate
+
+- same 1000 labs, histogram of estimated d
+- shade the significant ones: they average d around 0.85 (true 0.4)
+- at n = 20 only an overestimate clears the cutoff (winner's curse / Type M error)
+
+Reality 3: the replication trap
+
+- a published d = 0.8 from a small study
+- plan for 80% power at d = 0.8: 26 per group
+- real power against d = 0.4: about .29
+
+Doing it properly
+
+- pick the smallest effect you'd care about, not the one you hope for
+- power curve (power against n): 80% needs about 100 per group
+- rerun 1000 labs at 100: about 800 find it, and significant d now near 0.4
+
+Optional
+
+- a field where half the tested ideas are true: at low power many significant results are false positives
+
+Toolbox: `my_power_curve()` across n, checked against `pwr.t.test()`.

@@ -1,0 +1,14 @@
+# (PART) Sampling {-}
+
+# Sampling Distributions {#sampling-distributions}
+
+<div class="draft">Work in progress.</div>
+
+<div class="note">
+**Not written yet.** Working outline below.
+</div>
+
+- one population, many samples: each sample mean is different
+- collect the means: the sampling distribution
+- bigger samples, narrower spread
+- builds on the stats book: mean, variance, SD (link)

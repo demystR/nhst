@@ -1,0 +1,11 @@
+# p-values {#p-values}
+
+<div class="draft">Work in progress.</div>
+
+<div class="note">
+**Not written yet.** Working outline below.
+</div>
+
+- share of null t-values at least as far out as ours
+- simulated p, then exact p from the t distribution
+- what a p-value is not

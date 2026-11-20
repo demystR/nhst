@@ -1,0 +1,27 @@
+/* This book's own rules. The shared theme is include/demystR.css: do not edit it here.
+
+   Chapters not written yet: shown in grey italics in the contents sidebar, using the
+   theme's soft ink colour. Add one line per unwritten chapter (its #id plus .html), and
+   delete the line when the chapter is written. */
+.book-toc li a[href="sampling-distributions.html"],
+.book-toc li a[href="standard-error-t.html"],
+.book-toc li a[href="null-distributions.html"],
+.book-toc li a[href="p-values.html"],
+.book-toc li a[href="error-rates.html"],
+.book-toc li a[href="power.html"],
+.book-toc li a[href="a-priori-power.html"],
+.book-toc li a[href="sensitivity.html"],
+.book-toc li a[href="post-hoc-power.html"] {
+  color: var(--dm-ink-soft);
+  font-style: italic;
+}
+
+.draft {
+  background: #fff4d6;
+  border: 1px dashed #c99a2e;
+  border-radius: 6px;
+  color: #6b4e0f;
+  font-style: italic;
+  margin: 0 0 1.25rem;
+  padding: .5rem .9rem;
+}

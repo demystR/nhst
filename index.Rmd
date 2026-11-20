@@ -1,0 +1,47 @@
+--- 
+title: "Demystifying Null Hypothesis Testing"
+author: "Sean Westwood"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+description: |
+  Sampling and null distributions, p-values, error rates and power, all built by simulation.
+---
+
+# Overview {-}
+
+**Author:** Sean Westwood
+
+Part of the [demystR](https://demystr.github.io) series.
+
+<div class="draft">Work in progress.</div>
+
+- sampling and null distributions, p-values, error rates, power, all by simulation in R
+- each idea: words, picture, equation, code
+- aim: point at a term, see it in a figure, find the line of code
+
+## Who This Book Is For {-}
+
+- basic R
+- builds on Demystifying Statistics (mean, variance, SD, t)
+
+## How The Book Is Organised {-}
+
+- Part 1, Sampling: sampling distributions, standard error and t
+- Part 2, Testing: null distributions, p-values, error rates, power
+- Part 3, Power in Practice: a priori power, sensitivity analysis, post hoc power
+
+The chapters shown in grey italics in the contents have not been written yet; each one
+describes what it will cover.
+
+## Acknowledgements {-}
+
+The style and structure of these books were inspired by the
+[PsyTeachR](https://psyteachr.github.io) books from the University of Glasgow.
+
+## Licence {-}
+
+The text, figures and data in this book are licensed under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), so you can reuse and adapt them
+as long as you credit the source. The code is licensed under MIT, so you can copy it into
+your own work freely.

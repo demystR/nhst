@@ -1,0 +1,12 @@
+# Standard Error and t {#standard-error-t}
+
+<div class="draft">Work in progress.</div>
+
+<div class="note">
+**Not written yet.** Working outline below.
+</div>
+
+- SD of the sampling distribution, by simulation
+- compare with SD / sqrt(n): the standard error
+- t = distance from comparison value in standard errors
+- short recap, the stats book builds t step by step (link)

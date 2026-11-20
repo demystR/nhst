@@ -1,0 +1,43 @@
+# Sensitivity Analysis {#sensitivity}
+
+<div class="draft">Work in progress.</div>
+
+<div class="note">
+**Not written yet.** Working outline below.
+</div>
+
+Question: what could my data detect?
+
+For secondary data, where n is already fixed. Aimed at the secondary data report.
+
+Setup
+
+- existing wellbeing survey, n = 120 students
+- correlation: weekly mindfulness practice and exam anxiety
+- sensitivity: 80% power only for r of .25 or more
+
+Same non-significant result, three realities
+
+- Reality 1: true r = .35. Most simulated surveys find it, so a null here is informative
+- Reality 2: true r = .10. Only about 19% find it. If r = .10 would matter, the study can't rule it out; a new study needs about 780 people
+- Reality 3: true r = 0. Non-significant 95% of the time
+- Realities 2 and 3 look the same from inside one study: why the sensitivity number has to be reported
+
+Figure
+
+- sensitivity curve: power against r at n = 120
+- shaded band: effects we'd care about
+- CI for r still includes .10
+
+Other secondary-data cases (may split into its own chapter if this gets long)
+
+- shrinking subgroup: 2000 in the survey (detects r = .06), but the question needs n = 120 (detects r = .25)
+- huge dataset: n = 20,000, nearly everything significant, so judge the size
+
+Writing it up
+
+- method sentence: "with n = 120 and alpha = .05, the study had 80% power to detect r of .25 or more"
+- discussion: which effect sizes are and aren't ruled out, one example per reality
+- pointer: equivalence testing for showing an effect is smaller than a chosen size
+
+Toolbox: `my_power_curve()` across effect sizes, checked against `pwr.r.test()`.

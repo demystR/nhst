@@ -1,0 +1,39 @@
+# Post Hoc Power {#post-hoc-power}
+
+<div class="draft">Work in progress.</div>
+
+<div class="note">
+**Not written yet.** Working outline below.
+</div>
+
+Question: why not work out power afterwards?
+
+Observed power = power calculated from the effect you found. It is the p-value in disguise.
+
+Setup
+
+- mindfulness experiment, true d = 0.4, 50 per group, true power about .51
+- 5000 labs, each works out its own observed power
+
+Reality 1: one number in two costumes
+
+- plot observed power against p: every dot on one curve
+- p = .05 gives observed power about .50
+- so every non-significant result has observed power under .50; "we were underpowered" is guaranteed, not evidence
+
+Reality 2: it misses the true power
+
+- every lab's true power is .51
+- observed power spreads from near 0 to near 1 (middle 80%: about .11 to .91)
+- histogram with the true value as a line
+
+Reality 3: the backwards argument
+
+- two non-significant labs, p = .06 and p = .60
+- p = .06 has higher observed power, which would read as the "more convincing null"
+
+Instead
+
+- redo one lab's write-up with a sensitivity analysis (previous chapter) and a CI
+
+Toolbox: `my_observed_power(p, n)`.

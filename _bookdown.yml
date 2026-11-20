@@ -1,0 +1,23 @@
+book_filename: "nhst"
+new_session: true
+output_dir: "docs"
+before_chapter_script: _common.R
+delete_merged_file: true
+rmd_files:
+  - "index.Rmd"
+  - "1a-sampling-distributions.Rmd"
+  - "1b-standard-error-t.Rmd"
+  - "2a-null-distributions.Rmd"
+  - "2b-p-values.Rmd"
+  - "2c-error-rates.Rmd"
+  - "2d-power.Rmd"
+  - "3a-a-priori-power.Rmd"
+  - "3b-sensitivity.Rmd"
+  - "3c-post-hoc-power.Rmd"
+language:
+  ui:
+    chapter_name: "Chapter "
+  label:
+    fig: "Figure "
+    tab: "Table "
+    eq: "Equation "

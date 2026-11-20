@@ -1,0 +1,11 @@
+# Error Rates {#error-rates}
+
+<div class="draft">Work in progress.</div>
+
+<div class="note">
+**Not written yet.** Working outline below.
+</div>
+
+- alpha: how often a null world gets called significant
+- beta: how often an effect world gets missed
+- the 2 x 2 table: correct, Type I, Type II, power
