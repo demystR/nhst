@@ -179,7 +179,7 @@ tibble(t = null_ts) |>
 
 ## Check It: Close Enough
 
-- Back to the ten scores from Chapter \@ref(standard-error-t), against comparison values 49 and 46
+- Back to the ten scores from Chapter \@ref(standard-error-t), against a comparison value of 49
 - The Steve null t-values still work here: under the null, the distribution of t depends only on the sample size, not the mean or SD
 - With 1000 samples the simulated p wobbles around the exact one, so `all.equal()` would fail
 - Instead we check the gap is small: `abs(...) < 0.05`
@@ -194,17 +194,8 @@ c(
 abs(my_sim_p_value(t_49, null_ts) - t.test(scores, mu = 49)$p.value) < 0.05
 ```
 
-```{r sim-p-check-46}
-t_46 <- my_t_value(scores, comparison_value = 46)
-
-c(
-  simulated = my_sim_p_value(t_46, null_ts),
-  R = t.test(scores, mu = 46)$p.value
-)
-abs(my_sim_p_value(t_46, null_ts) - t.test(scores, mu = 46)$p.value) < 0.05
-```
-
-- `TRUE` both times, so the p-values from our own null distribution are within 0.05 of R's
+- `TRUE`, so the p-value from our own null distribution is within 0.05 of R's
+- The exercise file checks 46 the same way
 
 ## From Simulation To The t Distribution
 
@@ -278,20 +269,20 @@ my_p_value(t = 0.95, df = 9)
 - No simulation this time, so the match should be exact
 
 ```{r my-p-value-check}
-c(mine = my_p_value(t_49, df = 9), R = t.test(scores, mu = 49)$p.value)
 all.equal(my_p_value(t_49, df = 9), t.test(scores, mu = 49)$p.value)
-
-all.equal(my_p_value(t_46, df = 9), t.test(scores, mu = 46)$p.value)
 ```
 
 ## Back To Our Two Comparison Values
 
 ```{r p-values, echo=FALSE}
+t_46 <- my_t_value(scores, comparison_value = 46)
 p_49 <- my_p_value(t_49, df = 9)
 p_46 <- my_p_value(t_46, df = 9)
 sim_49 <- my_sim_p_value(t_49, null_ts)
 sim_46 <- my_sim_p_value(t_46, null_ts)
 ```
+
+- Both comparison values side by side; the exercise file works through 46
 
 | Comparison value | t | Simulated p | Exact p | Past the cutoff at alpha .05? |
 |---|---|---|---|---|
