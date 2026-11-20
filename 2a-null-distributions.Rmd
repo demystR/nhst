@@ -7,4 +7,3 @@
 - a world where the null is true
 - many samples, many t-values
 - where the rare values start: cutoffs
-- see the stats book's Null Distributions chapter (link); go further here

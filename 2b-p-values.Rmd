@@ -40,6 +40,8 @@ cutoffs <- my_cutoffs(null_ts)
 scores <- c(44, 47, 48, 49, 50, 50, 51, 52, 53, 56)
 ```
 
+- If something later doesn't run, check your functions here:
+
 ```{r toolbox-check, webex.hide="Check your toolbox (three TRUEs)"}
 all.equal(my_t_value(scores, 49), unname(t.test(scores, mu = 49)$statistic))
 
@@ -285,8 +287,9 @@ sim_46 <- my_sim_p_value(t_46, null_ts)
 
 ```{r null-ps}
 null_ps <- my_p_value(null_ts, df = 9)
-my_mean(null_ps < 0.05)
 ```
+
+- `my_p_value()` works on all 1000 t-values at once, giving 1000 p-values
 
 ```{r null-ps-plot, fig.cap="p-values from 1000 groups in a world with no effect. Every value from 0 to 1 is about equally common.", fig.alt="Histogram of 1000 p-values from 0 to 1 in bins of 0.05. The bars are roughly flat at about 50 each; the first bar, below .05, is orange.", echo=FALSE}
 tibble(p = null_ps) |>
@@ -302,7 +305,7 @@ tibble(p = null_ps) |>
 ```
 
 - The histogram is flat. When the null is true, p = .80 and p = .03 are equally likely
-- About 5% fall below .05, which is alpha again
+- `r round(100 * my_mean(null_ps < 0.05), 1)`% fall below .05, close to alpha again
 - So a large p isn't evidence for the null. With no effect, p is just a random number between 0 and 1
 
 ### In A World With An Effect
@@ -316,9 +319,9 @@ effect_ps <- map_dbl(1:20, \(i) {
   steves <- rnorm(n = 10, mean = 180, sd = 7)
   my_p_value(my_t_value(steves, comparison_value = 175), df = 9)
 })
-round(sort(effect_ps), 3)
-my_mean(effect_ps < 0.05)
 ```
+
+- Each dot is one study:
 
 ```{r effect-ps-plot, fig.cap="p-values from 20 identical studies in a world where Steves really are 5 cm taller.", fig.alt="Dot plot of 20 p-values, one per study, on a scale from 0 to 1. Orange dots below the dashed line at .05, blue dots spread above it, up to about 0.5.", echo=FALSE, fig.height=5}
 tibble(study = 1:20, p = effect_ps) |>
@@ -356,14 +359,7 @@ A study finds p = .40. What can you conclude? `r mcq(c("There is no effect", "Th
 drug_1 <- sleep |> filter(group == 1) |> pull(extra)
 drug_t <- my_t_value(drug_1, comparison_value = 0)
 
-c(
-  simulated = my_sim_p_value(drug_t, null_ts),
-  exact = my_p_value(drug_t, df = 9),
-  R = t.test(drug_1, mu = 0)$p.value
-)
-
-abs(my_sim_p_value(drug_t, null_ts) - t.test(drug_1, mu = 0)$p.value) < 0.05
-all.equal(my_p_value(drug_t, df = 9), t.test(drug_1, mu = 0)$p.value)
+c(simulated = my_sim_p_value(drug_t, null_ts), exact = my_p_value(drug_t, df = 9))
 ```
 
 - `null_ts` came from heights (mean 175, SD 7), not sleep. That's fine because the null distribution of t depends only on the sample size
@@ -397,22 +393,7 @@ my_p_value <- function(t, df) {
 ```
 `r unhide()`
 
-- Then check the saved file works on its own (the last chunk of the exercise file):
-
-```{r toolbox-saved-check, eval=FALSE}
-rm(list = ls())
-source("my_functions.R")
-
-all.equal(my_sim_p_value(2, c(-3, -1, 0, 1, 2.5)), 0.4)
-
-scores <- c(44, 47, 48, 49, 50, 50, 51, 52, 53, 56)
-all.equal(
-  my_p_value(my_t_value(scores, 46), df = 9),
-  t.test(scores, mu = 46)$p.value
-)
-```
-
-- You should see two `TRUE`s
+- The last chunk of the exercise file checks that the saved file works on its own
 
 ## Where This Goes Next
 

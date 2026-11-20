@@ -7,4 +7,3 @@
 - one population, many samples: each sample mean is different
 - collect the means: the sampling distribution
 - bigger samples, narrower spread
-- builds on the stats book: mean, variance, SD (link)
