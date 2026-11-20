@@ -2,10 +2,6 @@
 
 <div class="draft">Work in progress.</div>
 
-<div class="note">
-**Not written yet.** Working outline below.
-</div>
-
 Question: why not work out power afterwards?
 
 Observed power = power calculated from the effect you found. It is the p-value in disguise.

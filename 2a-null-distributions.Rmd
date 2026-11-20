@@ -4,10 +4,6 @@
 
 <div class="draft">Work in progress.</div>
 
-<div class="note">
-**Not written yet.** Working outline below.
-</div>
-
 - a world where the null is true
 - many samples, many t-values
 - where the rare values start: cutoffs

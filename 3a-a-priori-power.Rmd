@@ -4,10 +4,6 @@
 
 <div class="draft">Work in progress.</div>
 
-<div class="note">
-**Not written yet.** Working outline below.
-</div>
-
 Question: how many people do I need?
 
 Running example: does a short mindfulness exercise before an exam reduce test anxiety? Two groups.

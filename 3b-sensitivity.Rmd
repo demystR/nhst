@@ -2,10 +2,6 @@
 
 <div class="draft">Work in progress.</div>
 
-<div class="note">
-**Not written yet.** Working outline below.
-</div>
-
 Question: what could my data detect?
 
 For secondary data, where n is already fixed. Aimed at the secondary data report.
