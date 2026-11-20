@@ -25,41 +25,31 @@ null t-values -> share at least as extreme as ours -> p-value
 
 ## Load Your Toolbox
 
-- The ten scores from Chapter \@ref(standard-error-t), used later
-
-```{r score-data}
-scores <- c(44, 47, 48, 49, 50, 50, 51, 52, 53, 56)
-```
-
 ```{r load-toolbox-student, eval=FALSE}
 library(tidyverse)
 source("my_functions.R")
 ```
 
-- We need `my_t_value()`, `my_null_t()` and `my_cutoffs()`. Check them first; you should see three `TRUE`s:
-
-```{r toolbox-check}
-all.equal(my_t_value(scores, 49), unname(t.test(scores, mu = 49)$statistic))
-
-set.seed(1)
-mine <- my_null_t(n = 10, pop_mean = 175, pop_sd = 7)
-set.seed(1)
-r_version <- unname(
-  t.test(rnorm(n = 10, mean = 175, sd = 7), mu = 175)$statistic
-)
-all.equal(mine, r_version)
-
-all.equal(my_cutoffs(20:1, alpha = 0.1), c(2, 19))
-```
-
-- Rebuild `null_ts` from Chapter \@ref(null-distributions): 1000 null t-values from groups of 10 Steves
-- `map_dbl(1:1000, \(i) ...)` runs the code 1000 times and keeps each number
+- Rebuild the 1000 null t-values from Chapter \@ref(null-distributions), and the ten scores from Chapter \@ref(standard-error-t)
 
 ```{r null-ts}
 set.seed(10)
 null_ts <- map_dbl(1:1000, \(i) my_null_t(n = 10, pop_mean = 175, pop_sd = 7))
 cutoffs <- my_cutoffs(null_ts)
-cutoffs
+
+scores <- c(44, 47, 48, 49, 50, 50, 51, 52, 53, 56)
+```
+
+```{r toolbox-check, webex.hide="Check your toolbox (three TRUEs)"}
+all.equal(my_t_value(scores, 49), unname(t.test(scores, mu = 49)$statistic))
+
+set.seed(1)
+mine <- my_null_t(n = 10, pop_mean = 175, pop_sd = 7)
+set.seed(1)
+r_version <- unname(t.test(rnorm(n = 10, mean = 175, sd = 7), mu = 175)$statistic)
+all.equal(mine, r_version)
+
+all.equal(my_cutoffs(20:1, alpha = 0.1), c(2, 19))
 ```
 
 ## Alpha And Type I Errors
@@ -179,23 +169,15 @@ tibble(t = null_ts) |>
 
 ## Check It: Close Enough
 
-- Back to the ten scores from Chapter \@ref(standard-error-t), against a comparison value of 49
-- The Steve null t-values still work here: under the null, the distribution of t depends only on the sample size, not the mean or SD
-- With 1000 samples the simulated p wobbles around the exact one, so `all.equal()` would fail
-- Instead we check the gap is small: `abs(...) < 0.05`
+- The ten scores against a comparison value of 49. The Steve null t-values work for any sample of 10, because under the null t depends only on the sample size
 
 ```{r sim-p-check}
 t_49 <- my_t_value(scores, comparison_value = 49)
 
-c(
-  simulated = my_sim_p_value(t_49, null_ts),
-  R = t.test(scores, mu = 49)$p.value
-)
-abs(my_sim_p_value(t_49, null_ts) - t.test(scores, mu = 49)$p.value) < 0.05
+c(simulated = my_sim_p_value(t_49, null_ts), R = t.test(scores, mu = 49)$p.value)
 ```
 
-- `TRUE`, so the p-value from our own null distribution is within 0.05 of R's
-- The exercise file checks 46 the same way
+- Close but not identical: 1000 simulated samples make the p-value wobble a little
 
 ## From Simulation To The t Distribution
 
@@ -264,9 +246,7 @@ my_p_value(t = 0.95, df = 9)
 ```
 `r unhide()`
 
-## Check It Against `t.test()`
-
-- No simulation this time, so the match should be exact
+- Matches `t.test()` exactly, since there's no simulation this time:
 
 ```{r my-p-value-check}
 all.equal(my_p_value(t_49, df = 9), t.test(scores, mu = 49)$p.value)
