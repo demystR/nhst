@@ -7,8 +7,8 @@
 # Keep only the functions in this file. Run and check them in your
 # exercise files, not here.
 #
-# Draft: the chapters before p-values are not written yet, so their
-# functions are filled in here for you.
+# Draft: the Part 1 chapters are not written yet, so their functions
+# are filled in here for you.
 
 
 # PART 1: SAMPLING =========================================================
@@ -59,22 +59,6 @@ my_t_value <- function(x, comparison_value) {
 
 
 # Null Distributions -------------------------------------------------------
-
-my_null_t <- function(n, pop_mean, pop_sd) {
-  sample_values <- rnorm(n = n, mean = pop_mean, sd = pop_sd)
-  output <- my_t_value(sample_values, comparison_value = pop_mean)
-  return(output)
-}
-
-my_cutoffs <- function(null_ts, alpha = 0.05) {
-  sorted <- sort(null_ts)
-  n <- length(sorted)
-  k <- floor(n * alpha / 2)
-  lower <- sorted[k + 1]
-  upper <- sorted[n - k]
-  output <- c(lower, upper)
-  return(output)
-}
 
 
 # p-values -----------------------------------------------------------------
