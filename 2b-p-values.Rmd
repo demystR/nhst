@@ -15,7 +15,6 @@ null t-values -> share at least as extreme as ours -> p-value
 **What you need for this chapter**
 
 - Chapter \@ref(standard-error-t) (`my_t_value()`) and Chapter \@ref(null-distributions) (`my_null_t()`, `my_cutoffs()`)
-- the same ideas are introduced more gently in the [p-values chapter of Demystifying Statistics](https://demystr.github.io/stats/p-values.html)
 </div>
 
 ## Files For This Chapter
