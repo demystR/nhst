@@ -2,6 +2,34 @@
 
 <div class="draft">Work in progress.</div>
 
+## Standard Error By Simulation
+
 - SD of the sampling distribution, by simulation
+- rebuild the population and the 1000 sample means of 20 from Chapter \@ref(sampling-distributions) (one line of text in the book; code hidden or in the exercise file)
+
+```{r rebuild-sample-means, include=FALSE}
+population_scores <- rnorm(n = 10000, mean = 50, sd = 10)
+
+one_sample_mean <- function(n) {
+  one_sample <- sample(population_scores, size = n)
+  mean(one_sample)
+}
+
+sample_means_20 <- map_dbl(1:1000, \(i) one_sample_mean(n = 20))
+```
+
 - compare with SD / sqrt(n): the standard error
+
+```{r simulated-standard-error}
+c(
+  simulated = sd(sample_means_20),
+  formula = sd(population_scores) / sqrt(20)
+)
+```
+
+- `simulated` = SE estimated from the sample means just made
+- `formula` = SE calculated from population SD and sample size (/ sqrt(20))
+
+## From Standard Error To t
+
 - t = distance from comparison value in standard errors

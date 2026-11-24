@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, .book-part {
 h1 .header-section-number, h2 .header-section-number, h3 .header-section-number {
   color: var(--dm-blue);
 }
-code, pre, kbd { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; }
+code, pre, kbd { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
 pre, div.sourceCode {
   background-color: var(--dm-blue-tint);
   border: none;
